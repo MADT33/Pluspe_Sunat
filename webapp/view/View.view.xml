@@ -1,0 +1,199 @@
+<mvc:View controllerName="pluspe.pagodetracsunat.controller.View"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:u="sap.ui.unified"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"    
+    height="100%">
+
+    <Page title="{i18n>SelecciondeParametro}" showFooter="true">
+        
+        <!-- Contenido de la página -->
+        <HBox justifyContent="Start" alignItems="Center" height="2.5rem" style="margin-right: 1rem;">
+            <Text text="Sociedad:" class="sapUiSmallMarginBeginEnd" />
+            <Input id="Sociedad" type="Text" width="4rem" maxLength="4" liveChange="onSociedadChange" required="true" class="sapUiSmallMarginBeginEnd"/>
+        </HBox>
+
+        <HBox width="100%" direction="Row">
+            <!-- Panel izquierdo -->
+            <Panel headerText="{i18n>Opciones}" expandable="false" class="sapUiSmallMargin" height="auto" width="40rem">
+                <content>
+                    <VBox>
+                        <CheckBox id="ListaDetracPorPagar" text="{i18n>ListaD}" selected="true" select="onCheckSelect" />
+                        <CheckBox id="VisualizarLoteDetrac" text="{i18n>Visualizar}" select="onCheckSelect" />
+                        <CheckBox id="AsignarConstDeposito" text="{i18n>Asignar}" select="onCheckSelect"/>
+                        <CheckBox id="ListaPagosDetraccion" text="{i18n>ListaP}" select="onCheckSelect"/>
+                    </VBox>
+                </content>
+            </Panel>
+
+            <!-- Panel derecho -->
+            <Panel headerText="{i18n>Detracciones}" expandable="false" class="sapUiSmallMargin" height="auto" width="30rem">
+                <content>
+                    <VBox>
+                        <Text text="{i18n>medios}" class="sapUiMediumMarginBottom .textcolor"/>
+                        <CheckBox id="PagoWCuentasP" text="{i18n>pagoWeb}" selected="true" select="onCheckSelect2" />
+                        <CheckBox id="PagoWCuentasB" text="{i18n>pagoWebAc}" select="onCheckSelect2"/>
+                        <Button text="Cofiguracion" press="onFragment"></Button>
+                    </VBox>
+                </content>
+            </Panel>
+        </HBox>
+
+        <HBox width="100%" class="sapUiSmallMarginTop" justifyContent="SpaceBetween" alignItems="Start">
+            <!-- Primer Panel inferior -->
+            <Panel headerText="{i18n>Variables}" expandable="false" height="auto" width="30rem">
+                <content>
+                 <VBox>
+    <!-- Primera fila -->
+    <HBox id="cuentaP" justifyContent="Center" alignItems="Center" class="sapUiSmallMarginBeginEnd">
+        <Text text="{i18n>Cuenta}" width="10rem" />
+        <Input id="CuentaPagadora" width="15rem" />
+    </HBox>
+
+    <!-- Segunda fila -->
+    <HBox  justifyContent="Center" alignItems="Center" class="sapUiSmallMarginBeginEnd">
+        <Text text="{i18n>DocNota}" width="10rem" />
+        <Input id="DocNotaCred" width="15rem" />
+    </HBox>
+
+
+
+    <!-- Botón alineado al centro -->
+    <HBox id="hboxButton" justifyContent="Center" alignItems="Center" class="sapUiSmallMarginBeginEnd" visible="false">
+        <Button text="Upload File" press="handleUploadPress"/>
+    </HBox>
+</VBox>
+                </content>
+            </Panel>
+
+
+            <!-- Segundo Panel inferior -->
+            <Panel id="Panel1" headerText="{i18n>filtros}" expandable="false" height="auto" width="50rem" visible="true">
+                <content>
+                    <VBox>       
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox>
+                                <HBox alignItems="Center" justifyContent="Start">
+                                    <Text text="{i18n>fecha}" width="10rem" class="sapUiSmallMarginBeginEnd"/>
+                                    <DatePicker id="FechaDesde" width="9rem" class="sapUiSmallMarginBeginEnd" valueFormat="yyyyMMdd" displayFormat="dd.MM.yyyy"/>
+                                    <Text text=" a " class="sapUiSmallMarginBeginEnd" />
+                                    <DatePicker id="FechaHasta" width="9rem" class="sapUiSmallMarginBeginEnd" valueFormat="yyyyMMdd" displayFormat="dd.MM.yyyy"/>
+                                </HBox>
+                                <HBox alignItems="Center" justifyContent="Start">
+                                    <Text text="{i18n>ClaseDocFiltro}" width="10rem" class="sapUiSmallMarginBeginEnd" />
+                                    <Input id="ClaseDocFiltrod" width="9rem" class="sapUiSmallMarginBeginEnd"  liveChange="onSociedadChange" />
+                                    <Text text=" a " class="sapUiSmallMarginBeginEnd"/>
+                                    <Input id="ClaseDocFiltroh" width="9rem" class="sapUiSmallMarginBeginEnd"  liveChange="onSociedadChange" />
+                                </HBox>
+                                <HBox alignItems="Center" justifyContent="Start">
+                                    <Text text="{i18n>Centrobene}" width="10rem" class="sapUiSmallMarginBeginEnd"/>
+                                    <Input id="CentroBeneficiod" width="9rem" class="sapUiSmallMarginBeginEnd"  liveChange="onSociedadChange" />
+                                    <Text text=" a " class="sapUiSmallMarginBeginEnd" />
+                                    <Input id="CentroBeneficioh" width="9rem" class="sapUiSmallMarginBeginEnd"  liveChange="onSociedadChange" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </content>
+            </Panel>
+           
+             <!-- Segundo Panel inferior radio buton 2 -->
+
+            <Panel id="Panel2" headerText="{i18n>filtros}" expandable="false" height="auto" width="50rem" >
+                <content>
+    <VBox>       
+        <HBox justifyContent="Center" alignItems="Center">
+            <VBox>              
+                <HBox alignItems="Center" justifyContent="Start">
+                    <Text text="{i18n>Lote}" width="10rem" />
+                    <Input id="Lote" width="15rem" />
+                </HBox>              
+                <HBox alignItems="Center" justifyContent="Start">
+                    <Text text="{i18n>Archivo}" width="10rem" />
+                    <VBox>
+                        <u:FileUploader  
+                            id="fileUploader"  
+                            name="myFileUpload"  
+                            uploadUrl="upload/"  
+                            tooltip="Upload your file to the local server"  
+                            uploadComplete="handleUploadComplete"  
+                            width="15rem"/>  
+                        <Button
+                            text="Enviar Archivo"
+                            press="handleUploadPress"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</content>            
+</Panel>
+             <!-- Segundo Panel inferior radio buton 3 -->
+           <Panel id="Panel3" headerText="{i18n>filtros}" expandable="false" height="auto" width="50rem">
+    <content>
+        <VBox>       
+            <HBox justifyContent="Center" alignItems="Center">
+                <VBox>
+                    <HBox alignItems="Center" justifyContent="Start">
+                        <Text text="{i18n>Ejercicio}" width="10rem" class="sapUiSmallMarginBeginEnd" />
+                        <Input id="Ejercicio" width="9rem" class="sapUiSmallMarginBeginEnd" liveChange="onSociedadChange" />
+                    </HBox>
+
+                    <!-- Segunda línea: Archivo + FileUploader + Botón -->
+                    <HBox alignItems="Center" justifyContent="Start">
+                        <Text text="{i18n>Numero_Documento}" width="10rem" class="sapUiSmallMarginBeginEnd"/>
+                        <Input id="NumDocuD" width="9rem" class="sapUiSmallMarginBeginEnd" liveChange="onSociedadChange" />
+                        <Text text=" a " class="sapUiSmallMarginBeginEnd" />
+                        <Input id="NumDocuH" width="9rem" class="sapUiSmallMarginBeginEnd" liveChange="onSociedadChange" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</Panel>
+              <!-- Segundo Panel inferior radio buton 4 -->
+    <Panel id="Panel4" headerText="{i18n>filtros}" expandable="false" height="auto" width="50rem" visible="true">
+                <content>
+                    <VBox>       
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox>
+                                <HBox alignItems="Center" justifyContent="Start">
+                                    <Text text="{i18n>Fecha_pago}" width="10rem" class="sapUiSmallMarginBeginEnd"/>
+                                    <DatePicker id="FechaDesdePagos" width="9rem" class="sapUiSmallMarginBeginEnd" valueFormat="yyyyMMdd" displayFormat="dd.MM.yyyy"/>
+                                    <Text text=" a " class="sapUiSmallMarginBeginEnd" />
+                                    <DatePicker id="FechaHastaPagos" width="9rem" class="sapUiSmallMarginBeginEnd" valueFormat="yyyyMMdd" displayFormat="dd.MM.yyyy"/>
+                                </HBox>                               
+                                <HBox alignItems="Center" justifyContent="Start">
+                                    <Text text="{i18n>Centrobene}" width="10rem" class="sapUiSmallMarginBeginEnd"/>
+                                    <Input id="CentroBeneficioPagos" width="9rem" class="sapUiSmallMarginBeginEnd"  liveChange="onSociedadChange" />
+                                    <Text text=" a " class="sapUiSmallMarginBeginEnd" />
+                                    <Input id="CentroBeneficiohPagos" width="9rem" class="sapUiSmallMarginBeginEnd"  liveChange="onSociedadChange" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </content>
+            </Panel>
+
+
+           
+        </HBox>
+
+        <!-- Footer con el botón -->
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button text="{i18n>Enviar}" width="5rem" press="onEnviar" type="Emphasized"/>
+                </contentRight>
+            </Bar>
+        </footer>
+
+    </Page>
+
+</mvc:View>
+
+

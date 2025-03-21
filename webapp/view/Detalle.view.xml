@@ -1,0 +1,113 @@
+<mvc:View
+    controllerName="pluspe.pagodetracsunat.controller.Detalle"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    height="100%">
+
+    <!-- Page principal -->
+    <Page id="page" title="{i18n>PageTitle}" >
+
+     <Button icon="sap-icon://nav-back" press="onNavBack" text="Atrás" />
+        <HBox justifyContent="End" height="2.5rem">
+            <Button type="Default" press="onGenerarLote" text="Generar Lote" class="sapUiSmallMarginEnd"/>
+            <Button type="Default" press="onDescargaMasiva" text="Mod Periodo Trib" class="sapUiSmallMarginEnd"/>
+            <Button type="Default" press="onReproceso" text="Reproceso de partidas sin lote"/>
+        </HBox>
+         <content>
+<ScrollContainer width="100%" horizontal="true">
+    <Table id="table" items="{globalModel>/data}" growing="true">
+        <columns>
+            <Column width="5rem"><Text text="{i18n>C_Code}" /></Column>
+            <Column width="8rem"><Text text="{i18n>A_Document}" /></Column>
+            <Column width="6rem"><Text text="{i18n>F_Year}" /></Column>
+            <Column width="6rem"><Text text="{i18n>Journal}" /></Column>
+            <Column width="5rem"><Text text="{i18n>Withh}" /></Column>
+            <Column width="8rem"><Text text="{i18n>PosDate}" /></Column>
+            <Column width="8rem"><Text text="{i18n>DoctDate}" /></Column>
+            <Column width="7rem"><Text text="{i18n>Tax_Type}" /></Column>
+            <Column width="10rem"><Text text="{i18n>B_Partner}" /></Column>
+            <Column width="6rem"><Text text="{i18n>Tra_Currency}" /></Column>
+            <Column width="6rem"><Text text="{i18n>A_LCurrency}" /></Column>
+            <Column width="8rem"><Text text="{i18n>Tax_Base}" /></Column>
+            <Column width="7rem"><Text text="{i18n>C_Code_Curr}" /></Column>
+            <Column width="6rem"><Text text="{i18n>Add_Curr}" /></Column>
+            <Column width="8rem"><Text text="{i18n>AmTrans_Curr}" /></Column>
+            <Column width="8rem"><Text text="{i18n>AmAdd_Curr}" /></Column>
+            <Column width="6rem"><Text text="{i18n>ransaccrcy}" /></Column>
+            <Column width="5rem"><Text text="{i18n>CRCY2}" /></Column>
+            <Column width="6rem"><Text text="{i18n>BASECRCY}" /></Column>
+            <Column width="6rem"><Text text="{i18n>TAXCRCY}" /></Column>
+            <Column width="6rem"><Text text="{i18n>CODECRCY}" /></Column>
+            <Column width="7rem"><Text text="{i18n>INCOCRCY}" /></Column>
+            <Column width="7rem"><Text text="{i18n>TRANCRCY}" /></Column>
+            <Column width="6rem"><Text text="{i18n>NADDKCRCY2}" /></Column>
+            <Column width="6rem"><Text text="{i18n>NADDKCRCY3}" /></Column>
+            <Column width="8rem"><Text text="{i18n>NETAMOUNT}" /></Column>
+            <Column width="6rem"><Text text="{i18n>NETCRCY}" /></Column>
+            <Column width="7rem"><Text text="{i18n>BASECODECRCY}" /></Column>
+            <Column width="8rem"><Text text="{i18n>GeL_Account}" /></Column>
+            <Column width="7rem"><Text text="{i18n>W_Tax_Rate}" /></Column>
+            <Column width="10rem"><Text text="{i18n>NCCode_Company}" /></Column>
+            <Column width="6rem"><Text text="{i18n>Country}" /></Column>
+            <Column width="8rem"><Text text="{i18n>campo32}" /></Column>
+            <Column width="8rem"><Text text="{i18n>campo33}" /></Column>
+            <Column width="8rem"><Text text="{i18n>campo34}" /></Column>
+            <Column width="8rem"><Text text="{i18n>campo35}" /></Column>
+            <Column width="8rem"><Text text="{i18n>campo36}" /></Column>
+            <Column width="8rem"><Text text="{i18n>campo37}" /></Column>
+        </columns>
+
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <Text text="{globalModel>C_Code}" />
+                    <Text text="{globalModel>A_Document}" />
+                    <Text text="{globalModel>F_Year}" />
+                    <Text text="{globalModel>Journal}" />
+                    <Text text="{globalModel>Withh}" />
+                    <Text text="{globalModel>PosDate}" />
+                    <Text text="{globalModel>DoctDate}" />
+                    <Text text="{globalModel>Tax_Type}" />
+                    <Text text="{globalModel>B_Partner}" />
+                    <Text text="{globalModel>Tra_Currency}" />
+                    <Text text="{globalModel>A_LCurrency}" />
+                    <Text text="{globalModel>Tax_Base}" />
+                    <Text text="{globalModel>C_Code_Curr}" />
+                    <Text text="{globalModel>Add_Curr}" />
+                    <Text text="{globalModel>AmTrans_Curr}" />
+                    <Text text="{globalModel>AmAdd_Curr}" />
+                    <Text text="{globalModel>ransaccrcy}" />
+                    <Text text="{globalModel>CRCY2}" />
+                    <Text text="{globalModel>BASECRCY}" />
+                    <Text text="{globalModel>TAXCRCY}" />
+                    <Text text="{globalModel>CODECRCY}" />
+                    <Text text="{globalModel>INCOCRCY}" />
+                    <Text text="{globalModel>TRANCRCY}" />
+                    <Text text="{globalModel>NADDKCRCY2}" />
+                    <Text text="{globalModel>NADDKCRCY3}" />
+                    <Text text="{globalModel>NETAMOUNT}" />
+                    <Text text="{globalModel>NETCRCY}" />
+                    <Text text="{globalModel>BASECODECRCY}" />
+                    <Text text="{globalModel>GeL_Account}" />
+                    <Text text="{globalModel>W_Tax_Rate}" />
+                    <Text text="{globalModel>NCCode_Company}" />
+                    <Text text="{globalModel>Country}" />
+                    <Text text="{globalModel>campo32}" />
+                    <Text text="{globalModel>campo33}" />
+                    <Text text="{globalModel>campo34}" />
+                    <Text text="{globalModel>campo35}" />
+                    <Text text="{globalModel>campo36}" />
+                    <Text text="{globalModel>campo37}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</ScrollContainer>
+           </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,32 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    
+    <Dialog id="myDialog" title="Registro" class="sapUiResponsivePadding">
+        <content>
+            <VBox alignItems="Center" justifyContent="Center">
+                <Text text="Clase Doc. Pago Transf"/>
+                <Input width="15rem" id="clasedoc" />
+                
+                <Text text="Clave Banco Nacion"/>
+                <Input width="15rem" id="claveBN" />               
+                
+                <Text text="Cuenta Retracción"/>
+                <Input width="15rem" id="cuentaD"/>
+                
+                <Text text="VP cuenta por Pagar"/>
+                <Input width="15rem" id="VP" />
+                
+                <Text text="Clase Doc. SP Detracción"/>
+                <Input width="15rem" id="CladeDocSP"/>
+                
+                <Text text="BP Detracción"/>
+                <Input width="15rem" id="BP" maxLength="1" />         
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="Cerrar" press=".onCloseDialog"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>
+
