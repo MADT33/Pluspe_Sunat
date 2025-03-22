@@ -33,6 +33,7 @@ sap.ui.define([
                         this.getView().byId("Panel3").setVisible(false)
                         this.getView().byId("Panel4").setVisible(false);
                         this.getView().byId("cuentaP").setVisible(true);
+                        this.getView().byId("idBTNEnviar").setVisible(true);
                         break;
 
                     case "VisualizarLoteDetrac":
@@ -41,6 +42,7 @@ sap.ui.define([
                         this.getView().byId("Panel3").setVisible(false)
                         this.getView().byId("Panel4").setVisible(false);
                         this.getView().byId("cuentaP").setVisible(false);
+                         this.getView().byId("idBTNEnviar").setVisible(false);
                         break;
                     case "AsignarConstDeposito":
                         this.getView().byId("Panel1").setVisible(false);
@@ -48,6 +50,7 @@ sap.ui.define([
                         this.getView().byId("Panel4").setVisible(false);
                         this.getView().byId("Panel3").setVisible(true);
                         this.getView().byId("cuentaP").setVisible(false);
+                        this.getView().byId("idBTNEnviar").setVisible(true);
                         break;
                     case "ListaPagosDetraccion":
                         this.getView().byId("Panel1").setVisible(false);
@@ -55,6 +58,7 @@ sap.ui.define([
                         this.getView().byId("Panel3").setVisible(false);
                         this.getView().byId("cuentaP").setVisible(false);
                         this.getView().byId("Panel4").setVisible(true);
+                        this.getView().byId("idBTNEnviar").setVisible(true);
                         break;
                     default:
                         break;
@@ -70,10 +74,17 @@ sap.ui.define([
         handleUploadPress: function (oEvent) {
             var oFileUploader = this.getView().byId("fileUploader"); // Obtener el FileUploader
             var oFile = oFileUploader.oFileUpload.files[0]; // Obtener el archivo seleccionado
-            
-            if (!oFile) {
-                console.error("No se seleccionó ningún archivo.");
-                sap.m.MessageToast.show("Por favor, selecciona un archivo.");
+            var sociedad = this.getView().byId("Sociedad").getValue();
+            var lote = this.getView().byId("Lote").getValue();
+        
+            // Validación de campos obligatorios
+            if (!oFile || !sociedad || !lote) {
+                var mensajeError = "Por favor, complete los siguientes campos obligatorios:\n";
+                if (!oFile) mensajeError += "- Archivo\n";
+                if (!sociedad) mensajeError += "- Sociedad\n";
+                if (!lote) mensajeError += "- Lote\n";
+        
+                sap.m.MessageBox.warning(mensajeError); // Muestra mensaje de advertencia
                 return;
             }
         
@@ -97,12 +108,28 @@ sap.ui.define([
                 var sPath = "/gettxtSet"; // Ruta de la entidad OData
         
                 var oPayload = {                   
-                    InTxt: sFileContent
+                    InTxt: sFileContent,
+                    Sociedad : sociedad,
+                    Lote : lote
                 };
         
                 oModel.create(sPath, oPayload, {
-                    success: function () {
+                    success: function (req) {
+                        console.log(req);
                         sap.m.MessageToast.show("Archivo enviado correctamente.");
+        
+                        var Mensaje = req.Mensaje;
+                        var tipoMsj = req.TipoMens;
+        
+                        if (tipoMsj === "I") {
+                            sap.m.MessageBox.information(Mensaje); // Mensaje informativo
+                        } else if (tipoMsj === "W") {
+                            sap.m.MessageBox.warning(Mensaje); // Mensaje de advertencia
+                        } else if (tipoMsj === "E") {
+                            sap.m.MessageBox.error(Mensaje); // Mensaje de error
+                        } else {
+                            sap.m.MessageBox.information("Tipo de mensaje no reconocido: " + Mensaje);
+                        }
                     },
                     error: function () {
                         sap.m.MessageToast.show("Error al enviar el archivo.");
@@ -176,6 +203,7 @@ sap.ui.define([
             var oView = this.getView();
             var bValid = true;
             var that = this;
+            var oModel = this.getOwnerComponent().getModel();
 
             var aCheckBoxes = [
                 "ListaDetracPorPagar", "VisualizarLoteDetrac", "AsignarConstDeposito",
@@ -193,12 +221,12 @@ sap.ui.define([
             }
 
             var aCamposObligatorios = [
-                { id: "Sociedad", mensaje: "La sociedad es obligatoria" },
+                { id: "Sociedad", mensaje: "La sociedad es obligatoria" }/*,
                 { id: "CuentaPagadora", mensaje: "La cuenta pagadora es obligatoria" },
                 { id: "DocNotaCred", mensaje: "El documento de nota de crédito es obligatorio" },
                 { id: "FechaDesde", mensaje: "La fecha inicial es obligatoria" },
                 { id: "ClaseDocFiltrod", mensaje: "Este campo es obligatorio" },
-                { id: "CentroBeneficiod", mensaje: "Este campo es obligatorio" }
+                { id: "CentroBeneficiod", mensaje: "Este campo es obligatorio" }*/
             ];
 
             var oData = {};
@@ -223,11 +251,106 @@ sap.ui.define([
 
             oData.FechaDesde = this.byId("FechaDesde").getValue();
             oData.FechaHasta = this.byId("FechaHasta").getValue();
+            oData.CuentaPagadora = this.byId("CuentaPagadora").getValue();
             oData.OpcPos = selectedCheckBoxIds[0];
             oData.MedPago = selectedCheckBoxIds[1];
-            oData.ClaseDocFiltroh = selectedCheckBoxIds[2];
+            oData.ClaseDocFiltrod = this.byId("ClaseDocFiltrod").getValue();
+            oData.ClaseDocFiltroh = this.byId("ClaseDocFiltroh").getValue();           
+            oData.CentroBeneficiod = this.byId("CentroBeneficiod").getValue();
+            oData.CentroBeneficioh = this.byId("CentroBeneficioh").getValue();
+            oData.R3Ejercicio = this.byId("Ejercicio").getValue();              
+            oData.R3DocNumD = this.byId("NumDocuD").getValue();             
+            oData.R3DocNumH = this.byId("NumDocuH").getValue();            
+            oData.R4FecPagD = this.byId("FechaDesdePagos").getValue();              
+            oData.R4FecPagH = this.byId("FechaHastaPagos").getValue();             
+            oData.R4CenBenD = this.byId("CentroBeneficioPagos").getValue();             
+            oData.R4CenBenH = this.byId("CentroBeneficiohPagos").getValue();
+            oData.DocNotaCred = this.byId("DocNotaCred").getValue();
 
-            console.log(oData);
+            oModel.create("/SunatImSet", oData, {
+                success: function (oResponse) {
+                    console.log("Datos creados exitosamente:", oResponse);
+
+                    var listAlv = oResponse.ListaAlv;
+                    var error = oResponse.Error;
+
+                     
+
+                    if(error){
+                        MessageBox.error(error);
+                     }else {
+                      
+                        var oModelSplit = [];                      
+                        var alvSplit =  listAlv.split("\n\r\n");
+
+                        alvSplit.forEach((linea) => {
+                            var valores = linea.trim().split(";");
+                           
+                            var obj = {
+
+                                 C_Code : valores[0] || "",
+                                 A_Document : valores[1] || "",
+                                 F_Year :  valores[2] || "",
+                                 Journal : valores[3] || "" , 
+                                 Withh: valores[4] || "" , 
+                                 PosDate : valores[5] || "" , 
+                                 DoctDate : valores[6] || "" , 
+                                 Tax_Type : valores[7] || "" , 
+                                 B_Partner : valores[8] || "" , 
+                                 Tra_Currency : valores[9] || "" , 
+                                 A_LCurrency : valores[10] || "" , 
+                                 Tax_Base : valores[11] || "" , 
+                                 C_Code_Curr : valores[12] || "" , 
+                                 Add_Curr : valores[13] || "" , 
+                                 AmTrans_Curr : valores[14] || "" , 
+                                 AmAdd_Curr :  valores[15] || "" , 
+                                 ransaccrcy :  valores[16] || "" , 
+                                 CRCY2 :  valores[17] || "" , 
+                                 BASECRCY : valores[18] || "" , 
+                                 TAXCRCY : valores[19] || "" , 
+                                 CODECRCY : valores[20] || "" , 
+                                 INCOCRCY :   valores[21] || "" , 
+                                 TRANCRCY : valores[22] || "" , 
+                                 NADDKCRCY2 : valores[23] || "" , 
+                                 NADDKCRCY3 : valores[24] || "" , 
+                                 NETAMOUNT : valores[25] || "" , 
+                                 NETCRCY : valores[26] || "" , 
+                                BASECODECRCY : valores[27] || "" , 
+                                GeL_Account : valores[28] || "" , 
+                                W_Tax_Rate : valores[29] || "" , 
+                                NCCode_Company : valores[30] || "" , 
+                                Country : valores[31] || "" , 
+                                campo32 : valores[32] || "" , 
+                                campo33 : valores[33] || "" , 
+                                campo34 : valores[34] || "" , 
+                                campo35 : valores[35] || "" , 
+                                campo36 : valores[36] || "" , 
+                                campo37 : valores[37] || "" , 
+                                
+                            };
+                     
+
+                            oModelSplit.push(obj); // Agregar el objeto al array
+                            
+                        });
+                        if (oModelSplit.length > 0) {
+                            var oGlobalModel = new sap.ui.model.json.JSONModel({ data: oModelSplit });
+                            sap.ui.getCore().setModel(oGlobalModel, "globalModel");
+            
+                            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                            if (oRouter) {
+                                oRouter.navTo("Detalle");
+                            } else {
+                                console.error("Router no encontrado");
+                            }
+                        }
+                    }
+                }.bind(this), 
+                error: function (oError) {
+                    console.error("Error al crear datos:", oError);
+                }
+            });
+        
         }
     });
 });

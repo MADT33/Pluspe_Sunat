@@ -13,6 +13,7 @@ sap.ui.define([
 
             // Obtener el modelo global que fue asignado en la vista anterior
             var oGlobalModel = sap.ui.getCore().getModel("globalModel");
+           
 
             // Verificar si el modelo global está disponible
             if (oGlobalModel) {

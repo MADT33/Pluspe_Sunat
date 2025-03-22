@@ -37,7 +37,7 @@
                         <Text text="{i18n>medios}" class="sapUiMediumMarginBottom .textcolor"/>
                         <CheckBox id="PagoWCuentasP" text="{i18n>pagoWeb}" selected="true" select="onCheckSelect2" />
                         <CheckBox id="PagoWCuentasB" text="{i18n>pagoWebAc}" select="onCheckSelect2"/>
-                        <Button text="Cofiguracion" press="onFragment"></Button>
+                        <Button text="Cofiguracion" press="onFragment" visible="false"></Button>
                     </VBox>
                 </content>
             </Panel>
@@ -123,7 +123,9 @@
                             uploadComplete="handleUploadComplete"  
                             width="15rem"/>  
                         <Button
-                            text="Enviar Archivo"
+                            text="Enviar"
+                            type="Emphasized"
+                            width="5rem"
                             press="handleUploadPress"/>
                     </VBox>
                 </HBox>
@@ -187,7 +189,7 @@
         <footer>
             <Bar>
                 <contentRight>
-                    <Button text="{i18n>Enviar}" width="5rem" press="onEnviar" type="Emphasized"/>
+                    <Button id="idBTNEnviar" text="{i18n>Enviar}" width="5rem" press="onEnviar" type="Emphasized"/>
                 </contentRight>
             </Bar>
         </footer>
